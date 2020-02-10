@@ -1,0 +1,56 @@
+[
+  {
+    "category": "manager",
+    "id": "188102285",
+    "mail": "david.cohen@gmail.com",
+    "name": "David Cohen",
+    "pass": "12",
+    "tel": "054-7887395",
+    "uName": "david"
+  },
+  {
+    "name": "Dina Shalom",
+    "category": "client",
+    "tel": "054-7777395",
+    "id": "111102285",
+    "mail": "dina.shalom@gmail.com",
+    "uName": "dina",
+    "pass": "123"
+  },
+  {
+    "name": "Lury Eshel",
+    "category": "supplier",
+    "tel": "054-5453975",
+    "id": "909002285",
+    "mail": "lury.eshel@gmail.com",
+    "uName": "lury",
+    "pass": "123"
+  },
+  {
+    "name": "Ron Revivo",
+    "category": "client",
+    "tel": "052-2253975",
+    "id": "890702285",
+    "mail": "ron.revivo@gmail.com",
+    "uName": "ron",
+    "pass": "123"
+  },
+  {
+    "name": "Beni Aharon",
+    "category": "worker",
+    "tel": "0546789234",
+    "id": "11295078047498",
+    "mail": "beni.aharon@gmail.com",
+    "uName": "beni",
+    "pass": "123"
+  },
+  {
+    "name": "Moran Shay",
+    "category": "worker",
+    "tel": "0556789532",
+    "id": "87648234729",
+    "mail": "moran.shay@gmail.com",
+    "uName": "moran",
+    "pass": "123"
+  }
+]

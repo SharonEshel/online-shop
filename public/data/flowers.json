@@ -1,0 +1,34 @@
+
+  
+  [
+    {
+      "name":"Rose",
+      "color":"red",
+      "image":"http://127.0.0.1:8083/images/rose1.JPG",
+      "price":"5$"
+    },
+    {
+      "name":"Delphinium",
+      "color":"blue",
+      "image":"http://127.0.0.1:8083/images/Delphinium.JPG",
+      "price":"4$"
+    },
+    {
+      "name": "Tulip",
+      "color":"pink",
+      "image":"http://127.0.0.1:8083/images/Tulip.JPG",
+      "price":"6$"
+    },
+    {
+      "name": "Buttercup",
+      "color":"purple",
+      "image":"http://127.0.0.1:8083/images/Buttercup.JPG",
+      "price":"5.5$"
+    },
+    {
+      "name": "White-Lily",
+      "color":"white",
+      "image":"http://127.0.0.1:8083/images/WhiteLily.JPG",
+      "price":"6.5$"
+    }
+  ]

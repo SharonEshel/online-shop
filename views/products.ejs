@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<img src="http://127.0.0.1:8083/images/catalog.JPG" alt="logo icon" style="right:500px;width:350px;height:150px;border:0;" >
+
+<div class="container">    
+	
+	
+	<% flowers.forEach(function(flower) { %>
+	<div class="col-sm-4"> 
+      <div class="panel panel-success">
+        <div class="panel-heading"><%= flower.name %></div>
+        <div class="panel-body">
+		<dl>
+			<dt><img style="border-radius: 50px 50px 50px 50px; width: 200px; height: 150px; " src=<%= flower.image %> class="img-responsive" style="width:100%" alt="Image"></dt>
+		</dl>
+		</div>
+		<div class="panel-footer">
+
+			<img id=<%= flower.name %>  onclick="addToCart(this.id)" title="add to your shopping cart" src="http://127.0.0.1:8083/images/addToCart.PNG" alt="addToCart icon" align="right" style="display:inline-block;width:40px;height:40px;border:0;" > 
+			<p> COLOR:<%= flower.color %> </p>
+			<p>PRICE: <%= flower.price %> </p>
+
+		</div>
+	 </div>
+	</div>
+	<% }); %>
+		
+   
+</div>
+
+<script>
+async function addToCart(fName) {
+	
+	var urlParams = new URLSearchParams(window.location.search);
+	userNameParam = urlParams.get('userName');
+	//alert(userNameParam+ " "+fName);
+	if(userNameParam!=null)
+	{
+		waiting();
+		//alert(userNameParam); 
+		//alert("in add to cart function"+userNameParam); 
+		try{	
+		let response=await fetch("/cart/add", {
+		body: JSON.stringify({uName:userNameParam,flowerName:fName}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let answer = await response.text();
+		if (answer=='OK')
+		{
+			products();
+			stopWaiting();
+			alert("The flower added to your cart");
+		}
+		else
+		{
+			alert("The flower can't be added");
+		}
+	}
+	catch (error) { console.error('Error: ', error); }
+
+	}
+	else
+		alert("Adding to cart is only for registered users"); 
+
+}
+
+
+
+
+
+/*
+ 
+async function deleteBranch(brAddress) 
+{
+	waiting();
+	//alert(brAddress);
+	try{	
+		let response=await fetch("/branches/delete", {
+		body: JSON.stringify({ bAddress: brAddress}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let answer = await response.text();
+		if (answer=='OK')
+		{
+			//document.getElementById('id02').style.display='none';
+			//alert("The branch deleted successsfully");
+			branches();
+			stopWaiting();
+		}
+		else
+		{
+			alert(answer);
+		}
+	}
+	catch (error) { console.error('Error: ', error); }
+}
+*/
+</script>
+
+
+
+</body>
+</html>

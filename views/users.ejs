@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body >
+<img src="http://127.0.0.1:8083/images/users.JPG" alt="logo icon" style="right:500px;width:350px;height:150px;border:0;" >
+
+<button onclick="document.getElementById('id02').style.display='block'" style="margin-left:60px;width: 200px;border-radius: 12px; padding: 5px 10px; background-color: #008CBA;border: none;color: white;text-align: center;font-size: 16px;cursor: pointer;" >Add User</button>
+<img src="http://127.0.0.1:8083/images/refresh.PNG" title="refresh" alt="refresh icon" onclick="users()" style="margin-left:20px;width:38px;height:38px;" >
+
+
+<div class="container">    
+	
+	
+	<% users.forEach(function(user) { %>
+	<div class="col-sm-4"> 
+      <div class="panel panel-primary">
+        <div class="panel-heading"><p><%= user.name %></p><p><%= user.id %></p></div>
+		    <div class="panel-body">
+			<dl>
+			<dt><h4><%= user.mail %> </h4></dt>
+			<dt><h4><%= user.tel %></h4> </dt>
+			<dt><h4>USER NAME:<%= user.uName %></h4> </dt>
+			<dt><h4>PASSWORD:<%= user.pass %></h4> </dt>
+			</dl>
+			</div>
+		<div class="panel-footer">
+			<p style= "display:inline-block"> <%= user.category %> </p>
+			<img id=<%= user.uName %> onclick="deleteUser(this.id)" title="delete" src="http://127.0.0.1:8083/images/deleteIcon1.PNG" alt="delete icon" align="right" style="display:inline-block;width:32px;height:32px;border:0;"> 
+			<img id=<%= user.uName %> onclick="editUser(this.id)" title="edit" src="http://127.0.0.1:8083/images/editIcon.PNG" alt="edit icon"  align="right" style= "display:inline-block;width:32px;height:32px;border:0;" ><br> 
+
+		</div>
+	
+
+		</div>
+
+		
+	</div>
+	<% }); %>
+	
+   
+</div>
+
+<!-- addUser Modal -->
+<div id="id02" class="modal">
+  <span onclick="document.getElementById('id02').style.display='none'" 
+class="close" title="Close Modal">&times;</span>
+
+  <!-- Modal Content -->
+  <div class="modal-content animate" >
+    <div class="imgcontainer">
+      <img src="/images/addUser.JPG" alt="addUser" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>name</b></label>
+      <input style="margin-left:27px" type="text" placeholder="Enter name" name="uname" id="userName1" required >
+		<br>
+	  <label for="tel"><b>telephone</b></label>
+      <input type="tel" placeholder="Enter telephone" name="tel" id="userTel" required >
+		<br>
+		<label for="id"><b>id</b></label>
+      <input style="margin-left:52px" type="text" placeholder="Enter Id" name="id" id="userId" required >
+		<br>
+		<label for="mail"><b>e-mail</b></label>
+      <input style="margin-left:25px" type="email" placeholder="Enter E-mail" name="mail" id="userMail" required >
+		<br>
+		<label for="userName"><b>userName</b></label>
+      <input type="text" placeholder="Enter userName" name="userName" id="userName2" required >
+		<br>
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" id="userPassword1" required>
+		<br>
+	 <label for="category"><b>Category</b></label><br>
+     <input type="radio" name="category" value="manager" id="Manager" style="margin-left:20px"> manager
+     <input type="radio" name="category" value="worker" id="Worker" style="margin-left:15px"> worker 
+	  <input type="radio" name="category" value="supplier" id="Supplier" style="margin-left:15px"> supplier 
+     <input type="radio" name="category" value="client" id="Client" style="margin-left:15px"> client<br>  
+
+
+      <button type="submit" style="background-color: #008CBA" onclick="submitUser()">Submit</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1;width:99%" >
+      <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </div>
+</div> 
+
+<!-- editUser Modal -->
+<div id="id04" class="modal">
+  <span onclick="document.getElementById('id04').style.display='none'" 
+class="close" title="Close Modal">&times;</span>
+
+  <!-- Modal Content -->
+  <div class="modal-content animate" >
+    <div class="imgcontainer">
+      <img src="/images/editUser.JPG" alt="editUser" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>name</b></label>
+      <input style="margin-left:27px" type="text" placeholder="Enter name" name="uname" id="userName1Edit" required >
+		<br>
+	  <label for="tel"><b>telephone</b></label>
+      <input type="tel" placeholder="Enter telephone" name="tel" id="userTelEdit" required >
+		<br>
+		<label for="id"><b>id</b></label>
+      <input style="margin-left:52px" type="text" placeholder="Enter Id" name="id" id="userIdEdit" required >
+		<br>
+		<label for="mail"><b>e-mail</b></label>
+      <input style="margin-left:25px" type="email" placeholder="Enter E-mail" name="mail" id="userMailEdit" required >
+		<br>
+		<label for="userName"><b>userName</b></label>
+      <input type="text" placeholder="Enter userName" name="userName" id="userName2Edit"  readonly >
+		<br>
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" id="userPassword1Edit" required>
+		<br>
+	 <label for="category"><b>Category</b></label><br>
+     <input type="radio" name="categoryEdit" value="manager" id="manager" style="margin-left:20px"> manager
+     <input type="radio" name="categoryEdit" value="worker" id="worker" style="margin-left:15px"> worker 
+	  <input type="radio" name="categoryEdit" value="supplier" id="supplier" style="margin-left:15px"> supplier 
+     <input type="radio" name="categoryEdit" value="client" id="client" style="margin-left:15px"> client<br>  
+
+
+      <button type="submit" style="background-color: #008CBA" onclick="submitEditUser()">Submit</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1;width:99%" >
+      <button type="button" onclick="document.getElementById('id04').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </div>
+</div> 
+
+
+<script>
+
+// Get the modal
+var modal = document.getElementById('id02');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+async function submitUser() {
+		waiting();
+	try{	
+		let response=await fetch("/users/add", {
+		body: JSON.stringify({userName1:document.getElementById("userName1").value,
+							uTel:document.getElementById("userTel").value,
+							uId:document.getElementById("userId").value,
+							uMail:document.getElementById("userMail").value,
+							userName2:document.getElementById("userName2").value,
+							uPass:document.getElementById("userPassword1").value,
+							uCategory:document.querySelector('input[name="category"]:checked').value}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let answer = await response.text();
+		if (answer=='OK')
+		{
+			document.getElementById('id02').style.display='none';
+			users();
+			stopWaiting();
+			//alert("The user added successsfully");
+		}
+		else
+		{
+			alert(answer);
+		}
+	}
+	catch (error) { console.error('Error: ', error); }
+}
+		
+
+
+
+async function deleteUser(Dname) {
+	waiting();
+	
+	try{	
+		let response=await fetch("/users/delete", {
+		body: JSON.stringify({ userName2: Dname}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let answer = await response.text();
+		if (answer=='OK')
+		{
+			//document.getElementById('id02').style.display='none';
+			//alert("The user deleted successsfully");
+			users();
+			stopWaiting();
+		}
+		else
+		{
+			alert(answer);
+		}
+	}
+	catch (error) { console.error('Error: ', error); }
+}
+
+
+async function editUser(Dname) {
+	//alert(Dname);
+	try{	
+		let response=await fetch("/users/get", {
+		body: JSON.stringify({ userName2: Dname}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let ans= await response.text();
+		//let answer=await ans.JSON();
+		 let answer = JSON.parse(ans);
+			//alert(answer);
+			
+			//alert(answer.category);
+			document.getElementById('id04').style.display='block';
+			
+			document.getElementById('userName1Edit').value=answer.name;
+			document.getElementById('userTelEdit').value=answer.tel;
+			document.getElementById('userIdEdit').value=answer.id;
+			document.getElementById('userMailEdit').value=answer.mail;
+			document.getElementById('userName2Edit').value=answer.uName;
+			document.getElementById('userPassword1Edit').value=answer.pass;
+			document.getElementById(answer.category).checked = true;
+	}
+	catch (error) { console.error('Error: ', error); }
+}
+
+async function submitEditUser() {
+	//alert("אנחנו בפונקציה");
+	waiting();
+	try{	
+		let response=await fetch("/users/edit", {
+		body: JSON.stringify({userName1:document.getElementById("userName1Edit").value,
+							uTel:document.getElementById("userTelEdit").value,
+							uId:document.getElementById("userIdEdit").value,
+							uMail:document.getElementById("userMailEdit").value,
+							userName2:document.getElementById("userName2Edit").value,
+							uPass:document.getElementById("userPassword1Edit").value,
+							uCategory:document.querySelector('input[name="categoryEdit"]:checked').value}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let answer = await response.text();
+		if (answer=='OK')
+		{
+			document.getElementById('id04').style.display='none';
+			//alert("The user changed successsfully");
+			users();
+			stopWaiting();
+		}
+		else
+		{
+			alert(answer);
+		}
+	}
+	catch (error) { console.error('Error: ', error); }
+}
+
+
+
+
+</script>
+
+
+
+</body>
+</html>

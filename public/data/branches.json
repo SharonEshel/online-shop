@@ -1,0 +1,27 @@
+[
+  {
+    "address": "Herzel 909, Rehovot",
+    
+    "category": "active",
+    "manager": "David Cohen",
+    "tel": "08-2639369"
+  },
+  {
+    "address": "Rabi Akiva 909, Bney-Brak",
+    "category": "no-active",
+    "manager": "Shlomo Moran",
+    "tel": "03-1111239"
+  },
+  {
+    "address": "d",
+    "category": "no-active",
+    "manager": "d",
+    "tel": "d"
+  },
+  {
+    "address": "t",
+    "category": "no-active",
+    "manager": "tt",
+    "tel": "tt"
+  }
+]

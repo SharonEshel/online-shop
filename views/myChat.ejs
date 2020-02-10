@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Helps the page scale better when using phones -->
+
+<link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/keynote-and-powerpoint-icons/256/Messages-512.png" /> <!-- Code to put a custom image on the tab in a web browser -->
+
+<!-- The page background image, hosted on my personal onedrive -->
+
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+
+
+
+<!-- Text for the instructions -->
+<img src="http://127.0.0.1:8083/images/chat.JPG" alt="logo icon" style="right:500px;width:350px;height:150px;border:0;" >
+
+	<head>
+		<body onLoad="scrollDiv_init()">
+		<title>Chat</title> <!-- The text on the tab in web browser -->
+
+<!-- START: CSS code -->
+		<style>
+
+	/* START: Alignment of Title, Counter and Instructions*/
+
+			#parent {width: 100%;}
+			#title {float:left; width: 40% ; height: 60px; border: 1px solid rgba(0,0,0,0);}
+			#counter {float:left; width: 15% ; padding-top: 20px ; height: 60px; border: 1px solid rgba(0,0,0,0); }
+			#end {float:left; width: 45% ; padding-top: 20px ; height: 60px; border: 1px solid rgba(0,0,0,0); }
+			#parent p {clear:both;}
+
+			#des {width: 100%; min-height: 40px; max-height: 200px; border: 1px solid rgba(0,0,0,0); padding-top: 20px; }
+
+	/* END */
+
+	/* START: bar containing name and message box and send button*/
+
+			* { margin: 0 padding: 0; box-sizing: border-box; }
+			body { font: 13px Helvetica, Arial; }
+			form { background: #00; padding: 10px; bottom: 0; width: 100%; position: relative; } /* Properties for the whole bar, relative positioning alows the bar to not cover up any messages*/
+			form .pseudo {border: 0; padding: 15px; width: 22%; margin-right: .5%; border-radius: 30px; background-color: rgb(211,211,211); } /* Code responsible for the properties of the username box */
+			form .message {border: 0; padding: 15px; width: 60%; margin-right: .5%; border-radius: 30px; border: 2px solid rgb(211,211,211) } /* Code responsible for the properties of the message box */
+			form button { width: 12%; background: rgb(0, 153, 153); border: none; padding: 15px; border-radius: 100px; } /*Code responsible for the perperties of the send button */
+			#messages { list-style-type: none; margin: 0; padding: 0; }
+			#messages li { padding: 5px 10px; }
+			#messages li:nth-child(odd) { background: #eee }
+
+	/* END */
+
+		</style>
+<!-- END -->
+
+	</head>
+
+	<script src="/socket.io/socet.io.js"></script>
+	<script>
+		var socket = io();
+	</script>
+
+<!-- START: JS script to build the message and  -->
+	<script src="/socket.io/socket.io.js"></script>
+		<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+		<script>
+            
+
+
+			$(function () { 
+				//var timeStamp = new Date().toLocaleString();
+
+                console.log("the problem isnt here");
+
+				var socket = io();
+				$('form').submit(function(){
+					socket.emit('chat message', {pseudo :$('#p').val(), message: $('#m').val()});
+					$('#m').val('');
+					return false;
+				});
+
+				var str = " ☛ " /* Used to add the joiner in the middle of the username and message as follows */
+				socket.on('chat message', function(msg,timeStamp){
+					//$('#messages').append($('<li>').text(timeStamp /* <-- date/time code not yet perfected */)); 
+							//text
+					$('#messages').append($('<li>').html(timeStamp+ "<br/>" +"&emsp;"+"&emsp;"+"&emsp;"+ msg.pseudo + str + msg.message /* <-- date/time code not yet perfected */)); 
+					/* Above: adds username and message together with joiner in the middle into a single string */
+				});
+			});
+		</script>
+
+<!-- START: details for the bar -->
+	<body>
+		<ul id="messages"></ul>
+		<form action="">
+            <input type="hidden"  name="userName" value=<%= userName %>>
+			<input id="p" value=<%=userName %> class="pseudo" autocomplete="off" readonly />
+			<input id="m" class="message" autocomplete="off" />
+			<button><font size="2" color="white" >➣</font></button> <!-- Adds the arrow to the send button, simply copied and pasted a unicode symbol -->
+		</form>
+	</body>
+<!-- END-->
+
+<!-- START: an attempt to have the page always scroll down with the chat-->
+<script language="JavaScript1.2">
+
+function scrollwindow(){
+	if (document.all)
+	temp=document.body.scrollTop
+}
+
+</script>
+<!-- END -->
+
+</html>

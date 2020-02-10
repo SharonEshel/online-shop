@@ -1,0 +1,66 @@
+
+
+<link rel="stylesheet" href="/login.css">
+
+ <div class="row">
+
+<img src="http://127.0.0.1:8083/images/logo.JPG" alt="logo icon" style="right:0px;width:1280px;height:200px;border:0;" >
+
+
+
+</div>
+
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+	    <li class="active"><a href="#about" onclick="about()">About</a></li>
+		<li ><a href="#contactUs" onclick="contactUs()">Contact Us</a></li>
+		<li><a href="#catalog" onclick="products()">Catalog</a></li>
+        <li style="display:none" class="users"><a  href="#users" onclick="users()">Users</a></li>
+        <li  style="display:none" class="branches"><a href="#branches" onclick="branches()">Branches</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="login"><a onclick="document.getElementById('id01').style.display='block'"><span class="glyphicon glyphicon-user"></span> login </a></li>
+        <li style="display:none" class="logout"><a href="/"><span class="glyphicon glyphicon-user"></span> logout </a></li>       
+        <li style="display:none" class="cart"><a href="#cart" onclick="cart()"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+        <li style="display:none" class="chat"><a href="#chat" onclick="chat()"><span class="glyphicon glyphicon-comment"></span> Chat</a></li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+<!-- LOGIN Modal -->
+<div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'" 
+class="close" title="Close Modal">&times;</span>
+
+  <!-- Modal Content -->
+  <div class="modal-content animate" >
+    <div class="imgcontainer">
+      <img src="/images/userIcon.JPG" alt="user" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" id="userName" required >
+		<br>
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" id="userPassword" required>
+		<br>
+      <button type="submit" onclick="login()">Login</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1;width:99%" >
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </div>
+</div> 
+

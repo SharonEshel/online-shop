@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<img src="http://127.0.0.1:8083/images/cart.JPG" alt="logo icon" style="right:500px;width:350px;height:150px;border:0;" >
+
+<div class="container">    
+	
+	
+	<% cartList.forEach(function(flower) { %>
+	<div class="col-sm-4"> 
+      <div class="panel panel-success">
+        <div class="panel-heading"><%= flower.name %></div>
+        <div class="panel-body">
+		<dl>
+			<dt><img style="border-radius: 50px 50px 50px 50px; width: 200px; height: 150px; " src=<%= flower.image %> class="img-responsive" style="width:100%" alt="Image"></dt>
+		</dl>
+		</div>
+		<div class="panel-footer">
+            <img id=<%= flower.name %> onclick="deleteFlower(this.id)" title="delete" src="http://127.0.0.1:8083/images/deleteIcon1.PNG" alt="delete icon" align="right" style="display:inline-block;width:32px;height:32px;border:0;" > 
+			<p> COLOR:<%= flower.color %> </p>
+			<p>PRICE: <%= flower.price %> </p>
+
+		</div>
+	 </div>
+	</div>
+	<% }); %>
+		
+   
+</div>
+
+<script>
+ async function deleteFlower(fNamme) 
+{
+	waiting();
+	var urlParams = new URLSearchParams(window.location.search);
+	userNameParam = urlParams.get('userName');
+	//alert(brAddress);
+	try{	
+		let response=await fetch("/cart/delete", {
+		body: JSON.stringify({uName:userNameParam, flowerName: fNamme}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let answer = await response.text();
+		if (answer=='OK')
+		{
+			//document.getElementById('id02').style.display='none';
+			//alert("The branch deleted successsfully");
+			cart();
+			stopWaiting();
+		}
+		else
+		{
+			alert(answer);
+		}
+	}
+    catch (error) { console.error('Error: ', error); }
+    //alert("should deleted");
+}
+
+
+
+</script>
+
+
+
+</body>
+</html>

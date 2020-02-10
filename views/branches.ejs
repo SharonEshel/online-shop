@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<img src="http://127.0.0.1:8083/images/branches.JPG" alt="logo icon" style="right:500px;width:350px;height:150px;border:0;" >
+<button onclick="document.getElementById('id03').style.display='block'" style="margin-left:60px;width: 200px;border-radius: 12px; padding: 5px 10px; background-color:#FFB6C1;border: none;color: white;text-align: center;font-size: 16px;cursor: pointer;">Add Branch</button>
+<img src="http://127.0.0.1:8083/images/refresh.PNG" title="refresh" alt="refresh icon" onclick="branches()" style="margin-left:20px;width:38px;height:38px;" >
+
+
+<div class="container">    
+	
+	
+	<% branchesList.forEach(function(branch) { %>
+	<div class="col-sm-4"> 
+      <div class="panel panel-danger">
+        <div class="panel-heading"><%= branch.address %></div>
+		    <div class="panel-body">
+			<dl>
+			<dt><h4><%= branch.category %> </h4></dt>
+			<dt><h4>MANAGER:<%= branch.manager %></h4> </dt>
+			</dl>
+			</div>
+		<div class="panel-footer">
+			<p style= "display:inline-block">TEL:<%= branch.tel %> </p>
+			<img id=<%= branch.tel %> onclick="deleteBranch(this.id)" title="delete" src="http://127.0.0.1:8083/images/deleteIcon1.PNG" alt="delete icon" align="right" style="display:inline-block;width:32px;height:32px;border:0;" > 
+			<img id=<%= branch.tel %> onclick="editBranch(this.id)" title="edit" src="http://127.0.0.1:8083/images/editIcon.PNG" alt="edit icon"  align="right" style= "display:inline-block;width:32px;height:32px;border:0;" ><br> 
+
+		</div>
+	
+
+	   </div>
+
+		
+	</div>
+	<% }); %>
+	
+   
+   
+</div>
+
+<!-- LOGIN Modal -->
+<div id="id03" class="modal">
+  <span onclick="document.getElementById('id03').style.display='none'" 
+class="close" title="Close Modal">&times;</span>
+
+  <!-- Modal Content -->
+  <div class="modal-content animate" >
+    <div class="imgcontainer">
+      <img src="/images/addBranch.JPG" alt="addBranch" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="address"><b>address</b></label>
+      <input style="margin-left:11px" type="text" placeholder="Enter address" name="address" id="branchAddress" required >
+		<br>
+	  <label for="tel"><b>telephone</b></label>
+      <input type="tel" placeholder="Enter telephone" name="tel" id="branchTel" required >
+		<br>
+		<label for="manager"><b>manager</b></label>
+      <input style="margin-left:7px" type="text" placeholder="Enter manager" name="manager" id="branchManager" required >
+		
+		<br>
+	 
+     <input type="radio" name="activity" value="active" id="Active" style="margin-left:20px"> Active
+     <input type="radio" name="activity" value="no-active" id="No-active" style="margin-left:15px"> No-active <br>
+	  
+
+      <button type="submit" style="background-color: #FFB6C1" onclick="submitBranch()">Submit</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1;width:99%" >
+      <button type="button" onclick="document.getElementById('id03').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </div>
+</div> 
+
+
+
+<!-- editBranches Modal -->
+<div id="id05" class="modal">
+  <span onclick="document.getElementById('id05').style.display='none'" 
+class="close" title="Close Modal">&times;</span>
+
+  <!-- Modal Content -->
+  <div class="modal-content animate" >
+    <div class="imgcontainer">
+      <img src="/images/editBranch.JPG" alt="editBranch" class="avatar">
+    </div>
+
+     <div class="container">
+      <label for="address"><b>address</b></label>
+      <input style="margin-left:11px" type="text" placeholder="Enter address" name="address" id="branchAddressEdit" readonly >
+		<br>
+	  <label for="tel"><b>telephone</b></label>
+      <input type="tel" placeholder="Enter telephone" name="tel" id="branchTelEdit"  readonly>
+		<br>
+		<label for="manager"><b>manager</b></label>
+      <input style="margin-left:7px" type="text" placeholder="Enter manager" name="manager" id="branchManagerEdit" required >
+		
+		<br>
+	 
+     <input type="radio" name="activityEdit" value="active" id="active" style="margin-left:20px"> active
+     <input type="radio" name="activityEdit" value="no-active" id="no-active" style="margin-left:15px"> no-active <br>
+	  
+      <button type="submit" style="background-color: #008CBA" onclick="submitEditBranch()">Submit</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1;width:99%" >
+      <button type="button" onclick="document.getElementById('id05').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </div>
+</div> 
+
+
+
+
+
+<script>
+
+// Get the modal
+var modal = document.getElementById('id03');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+async function submitBranch() {
+	waiting();
+	//alert("אנחנו בפונקציה");
+	try{	
+		let response=await fetch("/branches/add", {
+		body: JSON.stringify({bAddress:document.getElementById("branchAddress").value,
+							bTel:document.getElementById("branchTel").value,
+							bManager:document.getElementById("branchManager").value,
+							bCategory:document.querySelector('input[name="activity"]:checked').value}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let answer = await response.text();
+		if (answer=='OK')
+		{
+			document.getElementById('id03').style.display='none';
+			//alert("The branch added successsfully");
+			branches();
+			stopWaiting();
+		}
+		else
+		{
+			alert(answer);
+		}
+	}
+	catch (error) { console.error('Error: ', error); }
+}
+		
+
+
+async function deleteBranch(brAddress) 
+{
+	waiting();
+	//alert(brAddress);
+	try{	
+		let response=await fetch("/branches/delete", {
+		body: JSON.stringify({ bAddress: brAddress}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let answer = await response.text();
+		if (answer=='OK')
+		{
+			//document.getElementById('id02').style.display='none';
+			//alert("The branch deleted successsfully");
+			branches();
+			stopWaiting();
+		}
+		else
+		{
+			alert(answer);
+		}
+	}
+	catch (error) { console.error('Error: ', error); }
+}
+
+
+async function editBranch(Baddress) 
+{
+	//alert(Baddress);
+	try{	
+		let response=await fetch("/branches/get", {
+		body: JSON.stringify({ branchAdress2: Baddress}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let ans= await response.text();
+		//let answer=await ans.JSON();
+		 let answer = JSON.parse(ans);
+			//alert(answer);
+			
+			//alert(answer.category);
+			document.getElementById('id05').style.display='block';
+			
+			document.getElementById('branchAddressEdit').value=answer.address;
+			document.getElementById('branchTelEdit').value=answer.tel;
+			document.getElementById('branchManagerEdit').value=answer.manager;
+			document.getElementById(answer.category).checked = true;
+	}
+	catch (error) { console.error('Error: ', error); }
+}
+
+
+
+
+async function submitEditBranch() {
+	
+	waiting();
+	//delete the old
+	try{	
+		let response=await fetch("/branches/delete", {
+		body: JSON.stringify({ bAddress:document.getElementById("branchTelEdit").value,}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let answer = await response.text();
+		//if (answer=='OK')
+		//{
+			//document.getElementById('id02').style.display='none';
+			//alert("The user deleted successsfully");
+		//}
+		if(answer!='OK')
+		{
+			alert(answer);
+		}
+	}
+	catch (error) { console.error('Error: ', error); }
+
+
+//add the new
+
+	try{	
+		let response=await fetch("/branches/add", {
+		body: JSON.stringify({bAddress:document.getElementById("branchAddressEdit").value,
+							bTel:document.getElementById("branchTelEdit").value,
+							bManager:document.getElementById("branchManagerEdit").value,
+							bCategory:document.querySelector('input[name="activityEdit"]:checked').value}),
+		method: 'POST',
+		headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json; charset=utf-8'
+            }
+		});
+		let answer = await response.text();
+		if (answer=='OK')
+		{
+			document.getElementById('id05').style.display='none';
+			//alert("The branch changed successsfully");
+			branches();
+			stopWaiting();
+		}
+		else
+		{
+			alert(answer);
+		}
+	}
+	catch (error) { console.error('Error: ', error); }
+}
+
+
+
+
+</script>
+
+
+</body>
+</html>
