@@ -1,0 +1,24 @@
+{
+  "name": "lab5.2",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "mongo": "node mongo.js"
+  },
+  "dependencies": {
+    "bufferutil": "^4.0.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "^2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "mongoose": "^5.8.3",
+    "morgan": "~1.9.1",
+    "socket.io": "^2.3.0",
+    "utf-8-validate": "^5.0.2"
+  },
+  "devDependencies": {
+    "xxxxx": "^1.0.3"
+  }
+}
